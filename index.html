@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<!-- <html class="no-js"> -->
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Sample HTML</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <h3>Login/SignUp</h3>
+    <input required id="email" type="email">
+    <input required id="password" type="password">
+    <button id="login">Log-In</button>
+    <button id="signup">Sign-Up</button>
+    <button id="logout" hidden>Log-Out</button>
+
+    <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-database.js"></script>
+    <script src="scripts/authentication.js"></script>
+    <script src="scripts/login.js"></script>
+    <script src="scripts/database.js"></script>
+
+    <script>
+        authenticate.init();
+        login.init();
+    </script>
+</body>
+
+
+
+</html>
