@@ -1,10 +1,12 @@
 (function() {
     database = {
+        databaseRef: undefined,
         databaseObject: undefined,
         Todo: undefined,
         init() {
             const user = authenticate.getCurrentUser();
             const userId = user.uid;
+            this.databaseRef = authenticate.firebase.database();
             const dbRefObject = authenticate.firebase.database().ref().child("todo").orderByChild('userId').equalTo(userId);
             this.databaseObject = dbRefObject;
             this.bindEvents();
@@ -43,12 +45,6 @@
             // Dispatch/Trigger/Fire the event
             document.dispatchEvent(event);
         }
-
-        // getTodoData() {
-        //     var self = this;
-        //     return self.Todo;
-        // }
-
     }
 
 })();

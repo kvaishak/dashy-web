@@ -10,6 +10,9 @@
         init() {
             var self = this;
             this.todoContainer = document.getElementById("todoContainer");
+            this.inputTodo = document.getElementById('inputTodo');
+            this.newTodo = document.getElementById('newTodo');
+            this.clearTodo = document.getElementById('clearTodo');
             // var initTodoData = database.getTodoData();
             // if (initTodoData) {
             //     self.updateTodo(initTodoData);
@@ -20,14 +23,34 @@
         bindEvents() {
             var self = this;
 
+            //when new todo is added to the server to update it in the local data.
             document.addEventListener("child_added", function(data) {
                 console.log(data.detail.snap);
                 self.todoAdded(data.detail.snap);
             });
 
+            //when todo is removed in server to update it accordingly.
             document.addEventListener("child_removed", function(data) {
                 console.log(data.detail.snap);
                 self.todoRemoved(data.detail.snap);
+            });
+
+            //creation of newTodo and sending it to the server.
+            self.newTodo.addEventListener('click', function() {
+                var userId = authenticate.user.uid;
+                var subject = self.inputTodo.value;
+                var completed = false;
+                database.databaseRef.ref().child('todo').push().set({
+                    "userId": userId,
+                    "subject": subject,
+                    "completed": completed,
+                });
+                self.inputTodo.value = "";
+            });
+
+            //clearing the text in the input box.
+            self.clearTodo.addEventListener('click', function() {
+                self.inputTodo.value = "";
             });
         },
 
@@ -46,18 +69,6 @@
 
         },
 
-        // //get the todo index from the todocontainer if it is present else returns null.
-        // getTodoIndex(todoData) {
-        //     var self = this;
-        //     var todoNodes = self.todoContainer.childNodes;
-
-        //     var length = todoNodes.length;
-        //     for (var i = 0; i < length; i++) {
-        //         if (todoNodes[i].getAttribute('id') === id) {
-        //             return i;
-        //         }
-        //     }
-        // },
 
         //creating a todo element.
         createTodoElement(snap) {
