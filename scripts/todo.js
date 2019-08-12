@@ -40,11 +40,12 @@
                 var userId = authenticate.user.uid;
                 var subject = self.inputTodo.value;
                 var completed = false;
-                database.databaseRef.ref().child('todo').push().set({
+                let todo = {
                     "userId": userId,
                     "subject": subject,
                     "completed": completed,
-                });
+                }
+                database.createNewTodo(todo);
                 self.inputTodo.value = "";
             });
 

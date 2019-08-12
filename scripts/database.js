@@ -28,9 +28,19 @@
                 self.removeTodo(snap);
                 console.log(snap.val());
             });
+
+            //     var connectedRef = firebase.database().ref(".info/connected");
+            //     connectedRef.on("value", function(snap) {
+            //         if (snap.val() === true) {
+            //             alert("connected");
+            //         } else {
+            //             alert("not connected");
+            //         }
+            //     });
         },
 
         addTodo(snap) {
+            //handline the addition of todo from database events.
             var self = this;
             var event = new CustomEvent("child_added", { detail: { snap } });
 
@@ -39,12 +49,20 @@
         },
 
         removeTodo(snap) {
+            //handline the removal of todo from database events
             var self = this;
             var event = new CustomEvent("child_removed", { detail: { snap } });
 
             // Dispatch/Trigger/Fire the event
             document.dispatchEvent(event);
+        },
+
+        createNewTodo(todo) {
+            //updation of new todo to database.
+            var self = this;
+            self.databaseRef.ref().child('todo').push().set(todo);
         }
     }
 
 })();
+t
