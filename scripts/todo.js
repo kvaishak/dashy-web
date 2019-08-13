@@ -6,6 +6,7 @@
 
         currentUser: authenticate.getCurrentUser(),
         databaseObject: undefined,
+        selectedTodo: undefined,
 
         init() {
             var self = this;
@@ -14,6 +15,7 @@
             this.newTodo = document.getElementById('newTodo');
             this.clearTodo = document.getElementById('clearTodo');
             this.logOut = document.getElementById('logout');
+            this.deleteTodo = document.getElementById('deleteTodo');
 
             this.bindEvents();
         },
@@ -46,25 +48,44 @@
                 self.inputTodo.value = "";
             });
 
+            self.deleteTodo.addEventListener('click', function() {
+                let selectedTodoId = self.selectedTodo.getAttribute('id');
+
+                database.deleteTodo(selectedTodoId);
+                self.clearSelection();
+            });
+
             //clearing the text in the input box.
             self.clearTodo.addEventListener('click', function() {
                 self.inputTodo.value = "";
             });
 
+            //logging out.
             self.logOut.addEventListener('click', function() {
                 authenticate.signout();
             });
+
+            //clearing the selectio in case user touches anywhere else.
+            document.addEventListener('click', function() {
+                self.clearSelection();
+            });
         },
 
-        //handles the addition of single todo.
+        //handles the addition of single todo from the database
         todoAdded(snap) {
             var self = this;
 
             var todoElement = self.createTodoElement(snap);
+            //binding of click events to individual todoElements.
+            todoElement.addEventListener('click', function() {
+                console.log("todo Selected");
+                self.selectTodo(event);
+                event.stopPropagation();
+            });
             self.todoContainer.append(todoElement);
         },
 
-        //handles the deletion of todo.
+        //handles the deletion of todo from the database.
         todoRemoved(snap) {
             var self = this;
             self.removeTodoElement(snap);
@@ -80,6 +101,7 @@
             var todoElement = document.createElement('p');
             todoElement.setAttribute('id', id);
             todoElement.setAttribute('completed', todoData.completed);
+            todoElement.className += 'todo';
             todoElement.innerText = todoData.subject;
             return todoElement;
         },
@@ -88,6 +110,27 @@
         removeTodoElement(snap) {
             var todoElement = document.getElementById(snap.key);
             todoElement.remove();
+        },
+
+        //handles the selection of todo.
+        selectTodo(event) {
+            let self = this,
+                selectedTodoElement = event.target;
+
+            self.clearSelection();
+            self.selectedTodo = selectedTodoElement;
+            selectedTodoElement.className = 'selected';
+            self.deleteTodo.disabled = false;
+        },
+
+        //handles the clearing of selected Todo.
+        clearSelection() {
+            let self = this,
+                selectedTodo = self.selectedTodo;
+            if (selectedTodo) {
+                selectedTodo.className = "todo";
+                self.deleteTodo.disabled = true;
+            }
         }
     }
 })();
