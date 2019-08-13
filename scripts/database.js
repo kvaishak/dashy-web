@@ -61,8 +61,15 @@
             //updation of new todo to database.
             var self = this;
             self.databaseRef.ref().child('todo').push().set(todo);
+        },
+
+        deleteTodo(todoId) {
+            //deletion of todo based on the todo key/id.
+            var self = this;
+            self.databaseRef.ref().child('todo').child(todoId).remove().then(() => {
+                console.log("Element Deleted");
+            })
         }
     }
 
 })();
-t

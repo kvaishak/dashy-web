@@ -13,10 +13,7 @@
             this.inputTodo = document.getElementById('inputTodo');
             this.newTodo = document.getElementById('newTodo');
             this.clearTodo = document.getElementById('clearTodo');
-            // var initTodoData = database.getTodoData();
-            // if (initTodoData) {
-            //     self.updateTodo(initTodoData);
-            // }
+            this.logOut = document.getElementById('logout');
 
             this.bindEvents();
         },
@@ -52,6 +49,10 @@
             //clearing the text in the input box.
             self.clearTodo.addEventListener('click', function() {
                 self.inputTodo.value = "";
+            });
+
+            self.logOut.addEventListener('click', function() {
+                authenticate.signout();
             });
         },
 
