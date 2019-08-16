@@ -152,13 +152,6 @@
             return label;
         },
 
-        // //removing a todo element.
-        // removeTodoElement(snap) {
-        //     var self = this;
-        //     var todoElement = self.getTodoElementById(snap.key);
-        //     todoElement.remove();
-        // },
-
         //handles the selection of todo.
         selectTodo(event) {
             let self = this,
