@@ -20,17 +20,17 @@
             });
 
             self.databaseObject.on('child_added', snap => {
-                self.addTodo(snap);
+                self.sync(snap, "add");
                 console.log(snap.val());
             });
 
             self.databaseObject.on('child_removed', snap => {
-                self.removeTodo(snap);
+                self.sync(snap, "remove");
                 console.log(snap.val());
             });
 
             self.databaseObject.on('child_changed', snap => {
-                self.updateTodo(snap);
+                self.sync(snap, "update");
                 console.log(snap.val());
             });
 
@@ -44,21 +44,8 @@
             //     });
         },
 
-        addTodo(snap) {
-            //handline the addition of todo from database events.
-            var event = new CustomEvent("child_added", { detail: { snap } });
-            document.dispatchEvent(event);
-        },
-
-        removeTodo(snap) {
-            //handline the removal of todo from database events
-            var event = new CustomEvent("child_removed", { detail: { snap } });
-            document.dispatchEvent(event);
-        },
-
-        updateTodo(snap) {
-            //handling the updation of todo mainly completion toggle.
-            var event = new CustomEvent("child_updated", { detail: { snap } });
+        sync(snap, action) {
+            var event = new CustomEvent("sync", { detail: { snap, action } });
             document.dispatchEvent(event);
         },
 
