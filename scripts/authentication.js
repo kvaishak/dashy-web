@@ -57,7 +57,7 @@
             //logging in.
             var self = this;
             const promise = self.auth.signInWithEmailAndPassword(email, password);
-            promise.catch(e => console.log(e.message));
+            promise.catch(e => login.alert(e.message));
         },
 
         signup(email, password) {

@@ -7,6 +7,9 @@
         txtEmail: document.getElementById("email"),
         txtPassword: document.getElementById("password"),
 
+        alertBox: document.getElementById("alertBox"),
+        alertMsg: document.getElementById("alertMsg"),
+
         init: function() {
             this.bindEvents();
         },
@@ -31,5 +34,10 @@
 
             });
         },
+        alert(message) {
+            var self = this;
+            self.alertBox.hidden = false;
+            self.alertMsg.innerText = message;
+        }
     }
 })();
