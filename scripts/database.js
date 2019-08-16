@@ -74,6 +74,13 @@
             self.databaseRef.ref().child('todo').child(todoId).remove().then(() => {
                 console.log("Element Deleted");
             })
+        },
+
+        updateExistingTodo(todoId, updates) {
+            //updates the exisisting todo with the id todoId
+            //now used only for the completion toggle - can be used for subject edition too.
+            var self = this;
+            self.databaseRef.ref().child('todo').child(todoId).update(updates);
         }
     }
 
