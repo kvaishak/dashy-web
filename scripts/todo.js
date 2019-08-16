@@ -65,7 +65,7 @@
                 authenticate.signout();
             });
 
-            //clearing the selectio in case user touches anywhere else.
+            //clearing the selection in case user touches anywhere else.
             document.addEventListener('click', function() {
                 self.clearSelection();
             });
@@ -95,6 +95,7 @@
 
         //creating a todo element.
         createTodoElement(snap) {
+            var self = this;
             var todoData = snap.val();
             var id = snap.key;
 
@@ -102,8 +103,37 @@
             todoElement.setAttribute('id', id);
             todoElement.setAttribute('completed', todoData.completed);
             todoElement.className += 'todo';
-            todoElement.innerText = todoData.subject;
+
+            var todoContent = document.createElement('label');
+            todoContent.innerText = todoData.subject;
+            todoContent.classList.add('todo-content');
+            todoElement.append(todoContent);
+
+            var toggle = self.createToggle(todoData.completed);
+            todoElement.append(toggle);
             return todoElement;
+        },
+
+        //creating the toggle for the completed attribute of todo.
+        createToggle(completed) {
+            var label = document.createElement('label');
+            label.classList.add('switch');
+
+            var ip = document.createElement('input');
+            ip.setAttribute('type', 'checkbox');
+            if (completed) {
+                ip.checked = true;
+            } else {
+                ip.checked = false;
+            }
+            label.append(ip);
+
+            var sp = document.createElement('span');
+            sp.classList.add('slider');
+            sp.classList.add('round');
+            label.append(sp);
+
+            return label;
         },
 
         //removing a todo element.
@@ -119,7 +149,7 @@
 
             self.clearSelection();
             self.selectedTodo = selectedTodoElement;
-            selectedTodoElement.className = 'selected';
+            selectedTodoElement.className = 'selected-todo';
             self.deleteTodo.disabled = false;
         },
 
