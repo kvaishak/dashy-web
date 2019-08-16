@@ -22,22 +22,9 @@
         bindEvents() {
             var self = this;
 
-            //when new todo is added to the server to update it in the local data.
-            document.addEventListener("child_added", function(data) {
-                console.log(data.detail.snap);
-                self.todoAdded(data.detail.snap);
-            });
-
-            //when todo is removed in server to update it accordingly.
-            document.addEventListener("child_removed", function(data) {
-                console.log(data.detail.snap);
-                self.todoRemoved(data.detail.snap);
-            });
-
-            //when a todo is being updated (completion toggle)
-            document.addEventListener("child_updated", function(data) {
-                console.log(data.detail.snap);
-                self.todoUpdated(data.detail.snap);
+            //catches the sync events from databse.
+            document.addEventListener("sync", function(data) {
+                self.sync.handle(data);
             });
 
 
@@ -77,43 +64,41 @@
                 self.clearSelection();
             });
         },
+        sync: {
+            //handles the additon/deletion and updation of todo elements coming from the database.
+            handle(data) {
+                var self = this;
+                let snap = data.detail.snap,
+                    action = data.detail.action;
+                self[action](snap);
+            },
+            add(snap) {
+                let todoElement = todo.createTodoElement(snap);
+                //binding of click events to individual todoElements.
+                todoElement.addEventListener('click', function() {
+                    console.log("todo Selected");
+                    todo.selectTodo(event);
+                    event.stopPropagation();
+                });
+                todo.todoContainer.append(todoElement);
+            },
+            remove(snap) {
+                let todoElement = todo.getTodoElementById(snap.key);
+                todoElement.remove();
+            },
+            update(snap) {
+                let todoData = snap.val(),
+                    todoElement = todo.getTodoElementById(snap.key);
 
-        //handles the addition of single todo from the database
-        todoAdded(snap) {
-            var self = this;
-
-            var todoElement = self.createTodoElement(snap);
-            //binding of click events to individual todoElements.
-            todoElement.addEventListener('click', function() {
-                console.log("todo Selected");
-                self.selectTodo(event);
-                event.stopPropagation();
-            });
-            self.todoContainer.append(todoElement);
-        },
-
-        //handles the deletion of todo from the database.
-        todoRemoved(snap) {
-            var self = this;
-            self.removeTodoElement(snap);
-
-        },
-
-        //handling of the updation of todo from the database;
-        todoUpdated(snap) {
-            var self = this;
-            var todoData = snap.val();
-            var todoElement = self.getTodoElementById(snap.key);
-
-            //completion toggle updation.
-            var completed = todoElement.getAttribute('completed');
-            var updateCompleted = String(todoData.completed);
-            if (completed != updateCompleted) {
-                todoElement.children[1].children[0].checked = todoData.completed;
-                todoElement.setAttribute('completed', todoData.completed);
+                //completion toggle updation.
+                let completed = todoElement.getAttribute('completed'),
+                    updateCompleted = String(todoData.completed);
+                if (completed != updateCompleted) {
+                    todoElement.children[1].children[0].checked = todoData.completed;
+                    todoElement.setAttribute('completed', todoData.completed);
+                }
             }
         },
-
 
         //creating a todo element.
         createTodoElement(snap) {
@@ -167,12 +152,12 @@
             return label;
         },
 
-        //removing a todo element.
-        removeTodoElement(snap) {
-            var self = this;
-            var todoElement = self.getTodoElementById(snap.key);
-            todoElement.remove();
-        },
+        // //removing a todo element.
+        // removeTodoElement(snap) {
+        //     var self = this;
+        //     var todoElement = self.getTodoElementById(snap.key);
+        //     todoElement.remove();
+        // },
 
         //handles the selection of todo.
         selectTodo(event) {
