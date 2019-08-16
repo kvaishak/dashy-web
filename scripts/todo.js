@@ -34,6 +34,13 @@
                 self.todoRemoved(data.detail.snap);
             });
 
+            //when a todo is being updated (completion toggle)
+            document.addEventListener("child_updated", function(data) {
+                console.log(data.detail.snap);
+                self.todoUpdated(data.detail.snap);
+            });
+
+
             //creation of newTodo and sending it to the server.
             self.newTodo.addEventListener('click', function() {
                 var userId = authenticate.user.uid;
@@ -92,6 +99,21 @@
 
         },
 
+        //handling of the updation of todo from the database;
+        todoUpdated(snap) {
+            var self = this;
+            var todoData = snap.val();
+            var todoElement = self.getTodoElementById(snap.key);
+
+            //completion toggle updation.
+            var completed = todoElement.getAttribute('completed');
+            var updateCompleted = String(todoData.completed);
+            if (completed != updateCompleted) {
+                todoElement.children[1].children[0].checked = todoData.completed;
+                todoElement.setAttribute('completed', todoData.completed);
+            }
+        },
+
 
         //creating a todo element.
         createTodoElement(snap) {
@@ -102,6 +124,7 @@
             var todoElement = document.createElement('p');
             todoElement.setAttribute('id', id);
             todoElement.setAttribute('completed', todoData.completed);
+            todoElement.setAttribute('todo-content', todoData.subject);
             todoElement.className += 'todo';
 
             var todoContent = document.createElement('label');
@@ -109,13 +132,14 @@
             todoContent.classList.add('todo-content');
             todoElement.append(todoContent);
 
-            var toggle = self.createToggle(todoData.completed);
+            var toggle = self.createToggle(todoData.completed, id);
             todoElement.append(toggle);
             return todoElement;
         },
 
         //creating the toggle for the completed attribute of todo.
-        createToggle(completed) {
+        createToggle(completed, id) {
+            var self = this;
             var label = document.createElement('label');
             label.classList.add('switch');
 
@@ -131,14 +155,21 @@
             var sp = document.createElement('span');
             sp.classList.add('slider');
             sp.classList.add('round');
+            sp.setAttribute('todoId', id);
             label.append(sp);
+
+            label.addEventListener('click', function() {
+                console.log("completion toggle");
+                self.toggleCompletion(event);
+                event.stopPropagation();
+            });
 
             return label;
         },
 
         //removing a todo element.
         removeTodoElement(snap) {
-            var todoElement = document.getElementById(snap.key);
+            var todoElement = document.getTodoElementById(snap.key);
             todoElement.remove();
         },
 
@@ -161,6 +192,30 @@
                 selectedTodo.className = "todo";
                 self.deleteTodo.disabled = true;
             }
+        },
+
+        //handling the toggling of the completion toggle.
+        toggleCompletion(event) {
+            var self = this;
+            var target = event.target;
+            if (target.classList[0] == "slider") {
+                var todoId = target.getAttribute('todoId');
+                var todoElement = self.getTodoElementById(todoId);
+                var completedString = todoElement.getAttribute('completed');
+                var newCompleted = completedString === "true" ? false : true;
+                var updates = {
+                        'completed': newCompleted,
+                    }
+                    // todoElement.children[1].children[0].checked = newCompleted;
+                todoElement.setAttribute('completed', newCompleted);
+
+                database.updateExistingTodo(todoId, updates);
+
+            }
+        },
+
+        getTodoElementById(id) {
+            return (document.getElementById(id));
         }
     }
 })();
