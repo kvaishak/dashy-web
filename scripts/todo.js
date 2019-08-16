@@ -169,7 +169,8 @@
 
         //removing a todo element.
         removeTodoElement(snap) {
-            var todoElement = document.getTodoElementById(snap.key);
+            var self = this;
+            var todoElement = self.getTodoElementById(snap.key);
             todoElement.remove();
         },
 
