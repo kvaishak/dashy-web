@@ -3,7 +3,6 @@
         //initializing the elements.
         loginButton: document.getElementById("login"),
         signUpButton: document.getElementById("signup"),
-        logOutButton: document.getElementById("logout"),
 
         txtEmail: document.getElementById("email"),
         txtPassword: document.getElementById("password"),
@@ -31,20 +30,6 @@
                 authenticate.signup(email, password);
 
             });
-
-            //loging out.
-            self.logOutButton.addEventListener('click', e => {
-                authenticate.signout();
-            });
         },
-
-        userLoggedIn: function(isUserloggedIn) {
-            var self = this;
-            if (isUserloggedIn) {
-                self.logOutButton.hidden = false;
-            } else {
-                self.logOutButton.hidden = true;
-            }
-        }
     }
 })();
