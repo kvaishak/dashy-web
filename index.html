@@ -9,6 +9,9 @@
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="scripts/util.js"></script>
+    <script src="scripts/alert.js"></script>
 
 
     <style>
@@ -59,6 +62,11 @@
         <button id="login" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
         <button id="signup" class="btn btn-lg btn-outline-primary btn-block " type="submit">Create a new Account</button>
         <p class="mt-5 mb-3 text-muted">© 2017-2019</p>
+
+        <!-- Alert when there is an error in login -->
+        <div id="alertBox" class="alert alert-danger alert-dismissible fade show" role="alert" hidden>
+            <label id="alertMsg"><strong>Holy guacamole!</strong> You should check in on some of those fields below.</label>
+        </div>
     </form>
 
     <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-app.js"></script>
