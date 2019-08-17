@@ -148,7 +148,6 @@
         createDeleteButton(id) {
             var delButton = document.createElement('button');
             delButton.setAttribute('type', 'button');
-            delButton.setAttribute('id', 'deleteTodo');
             delButton.setAttribute('todoId', id);
 
             delButton.classList.add('btn');
