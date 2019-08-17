@@ -100,7 +100,7 @@
                         // todoElement.setAttribute('completed', todoData.completed);
                     }
                 }
-                self.fromUI = false;
+                todo.fromUI = false;
             }
         },
 
