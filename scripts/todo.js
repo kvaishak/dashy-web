@@ -43,13 +43,6 @@
                 self.inputTodo.value = "";
             });
 
-            // self.deleteTodo.addEventListener('click', function() {
-            //     let selectedTodoId = self.selectedTodo.getAttribute('id');
-
-            //     database.deleteTodo(selectedTodoId);
-            //     self.clearSelection();
-            // });
-
             //clearing the text in the input box.
             // self.clearTodo.addEventListener('click', function() {
             //     self.inputTodo.value = "";
@@ -158,6 +151,10 @@
             delButton.style.display = "none";
             delButton.innerText = "Delete";
 
+            delButton.addEventListener('click', function() {
+                todo.deleteTodo();
+                event.stopPropagation();
+            });
             return delButton;
         },
 
@@ -194,6 +191,15 @@
 
             mainDiv.append(label);
             return mainDiv;
+        },
+
+        //handles the deletion of selected todo;
+        deleteTodo() {
+            let self = this,
+                selectedTodoId = self.selectedTodo.getAttribute('id');
+
+            database.deleteTodo(selectedTodoId);
+            self.clearSelection();
         },
 
         //handles the selection of todo.

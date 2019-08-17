@@ -7,7 +7,7 @@ p {
 }
 
 .selected-todo {
-    border-radius: 10px;
+    border-radius: 7px;
     box-shadow: 3px 3px 10px grey;
 }
 
