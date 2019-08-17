@@ -6,8 +6,10 @@
             let self = this;
             todo.init();
         },
-        updateUserName(username) {
+        updateUserName(user) {
             var self = this;
+            self.currentUser = user;
+            let username = user.displayName ? user.displayName : authenticate.createUsernamefromEmail(user.email);
             self.userWelcome.innerText = "Hello " + username + "!";
         }
     }
