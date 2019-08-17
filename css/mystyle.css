@@ -14,6 +14,10 @@ p {
     border-color: aquamarine;
 }
 
+.col-8 {
+    cursor: pointer;
+}
+
 
 /* for toggle switches */
 
