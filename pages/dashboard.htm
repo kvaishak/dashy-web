@@ -15,7 +15,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="../scripts/database.js"></script>
     <script src="../scripts/authentication.js"></script>
-    <script src="../scripts/todo.js"></script>
 
     <script>
         authenticate.init(true);
@@ -75,7 +74,7 @@
         <!-- Main jumbotron for a primary marketing message or call to action -->
         <div class="jumbotron">
             <div class="container">
-                <h1 class="display-3">Hello, user!</h1>
+                <h1 id="userWelcome" class="display-3">Hello, user!</h1>
                 <p>This is a Simple todo Application called Dashy created by me. You can use this web application to Add/Delete and Modify your todos. There is a supporting Android and iOS Application as well in Development.</p>
                 <p><a class="btn btn-primary btn-lg" href="" role="button">Learn more »</a></p>
             </div>
@@ -138,8 +137,10 @@
     </footer>
 
     <script src="../scripts/bootstrap.bundle.min.js"></script>
+    <script src="../scripts/todo.js"></script>
+    <script src="../scripts/dashboard.js"></script>
     <script>
-        todo.init();
+        dashboard.init();
     </script>
 </body>
 
