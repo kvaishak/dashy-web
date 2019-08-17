@@ -118,11 +118,10 @@
             todoDiv.classList.add('todo');
 
             var todoColomn = document.createElement('div');
-            todoColomn.classList.add('col-sm-8');
+            todoColomn.classList.add('col-8');
 
             var todoContent = document.createElement('p');
             todoContent.innerText = todoData.subject;
-            todoContent.classList.add('todo-content');
             todoColomn.append(todoContent);
 
             todoDiv.append(todoColomn);
@@ -136,7 +135,7 @@
         createCompleteDeleteContainer(completed, id) {
             var self = this;
             var mainDiv = document.createElement('div');
-            mainDiv.classList.add('col-sm-4');
+            mainDiv.classList.add('col-4');
             var completionToggle = self.createToggle(completed, id);
             var deleteButton = self.createDeleteButton(id);
 
