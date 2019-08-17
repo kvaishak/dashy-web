@@ -16,7 +16,7 @@
             this.newTodo = document.getElementById('newTodo');
             // this.clearTodo = document.getElementById('clearTodo');
             this.logOut = document.getElementById('logout');
-            this.deleteTodo = document.getElementById('deleteTodo');
+            // this.deleteTodo = document.getElementById('deleteTodo');
 
             this.bindEvents();
         },
@@ -208,7 +208,7 @@
             $('#toggle_' + todoId).hide();
             $('#delete_' + todoId).fadeIn("slow");
             selectedTodoElement.classList.add('selected-todo');
-            self.deleteTodo.disabled = false;
+            // self.deleteTodo.disabled = false;
         },
 
         //handles the clearing of selected Todo.
@@ -222,7 +222,7 @@
                 $('#delete_' + todoId).hide();
                 $('#toggle_' + todoId).fadeIn("slow");
                 selectedTodo.classList.remove('selected-todo');
-                self.deleteTodo.disabled = true;
+                // self.deleteTodo.disabled = true;
             }
         },
 
