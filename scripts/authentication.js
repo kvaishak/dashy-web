@@ -36,7 +36,6 @@
                     console.log(user);
                     //login.userLoggedIn(true);
                     self.user = user;
-
                     if (!fromDashBoard) {
                         window.location = "pages/dashboard.htm";
                     } else {
@@ -60,11 +59,24 @@
             promise.catch(e => login.alert(e.message));
         },
 
-        signup(email, password) {
+        signup(email, password, username) {
             //creating new user.
+            //if username is passed then it is updated as well.
             var self = this;
-            const promise = self.auth.createUserWithEmailAndPassword(email, password);
-            promise.catch(e => console.log(e.message));
+            username = username ? username : self.createUsernamefromEmail(email);
+            var self = this;
+            self.auth.createUserWithEmailAndPassword(email, password).then(function(userInfo) {
+                return userInfo.user.updateProfile({
+                    displayName: username
+                })
+            }).catch(function(error) {
+                login.alert(error.message);
+            });
+        },
+
+        createUsernamefromEmail(email) {
+            let index = email.indexOf('@');
+            return (email.substr(0, index));
         },
 
         signout() {
