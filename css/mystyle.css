@@ -7,11 +7,7 @@ p {
 }
 
 .selected-todo {
-    padding: 8px;
-    padding-left: 18px;
-    border-style: solid;
-    border-width: 2px;
-    border-color: aquamarine;
+    box-shadow: 3px 3px 10px grey;
 }
 
 .col-8 {
