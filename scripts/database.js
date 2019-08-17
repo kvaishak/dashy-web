@@ -16,7 +16,7 @@
             var self = this;
             self.databaseObject.on('value', snap => {
                 self.Todo = snap.val();
-                // console.log(snap.val());
+                $(".se-pre-con").fadeOut("slow");
             });
 
             self.databaseObject.on('child_added', snap => {
