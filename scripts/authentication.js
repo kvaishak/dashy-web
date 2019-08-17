@@ -39,6 +39,7 @@
                     if (!fromDashBoard) {
                         window.location = "pages/dashboard.htm";
                     } else {
+                        dashboard.updateUserName(user.displayName);
                         database.init();
                     }
                 } else {
