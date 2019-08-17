@@ -4,7 +4,6 @@
         todoContainer: document.getElementById("todoContainer"),
         sampleTodo: document.getElementById("Todo"),
 
-        currentUser: authenticate.getCurrentUser(),
         databaseObject: undefined,
         selectedTodo: undefined,
         fromUI: false,
