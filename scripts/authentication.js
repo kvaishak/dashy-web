@@ -38,7 +38,7 @@
                     self.user = user;
 
                     if (!fromDashBoard) {
-                        window.location = "pages/dashboard.html";
+                        window.location = "pages/dashboard.htm";
                     } else {
                         database.init();
                     }
