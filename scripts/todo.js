@@ -97,7 +97,6 @@
                         updateCompleted = todoData.completed;
                     if (completed != updateCompleted) {
                         toggleElement.children[0].checked = todoData.completed;
-                        // todoElement.setAttribute('completed', todoData.completed);
                     }
                 }
                 todo.fromUI = false;
@@ -149,13 +148,14 @@
             var delButton = document.createElement('button');
             delButton.setAttribute('type', 'button');
             delButton.setAttribute('todoId', id);
+            delButton.setAttribute('id', "delete_" + id);
 
             delButton.classList.add('btn');
             delButton.classList.add('btn-danger');
             delButton.classList.add('btn-lg');
             delButton.classList.add('btn-block');
 
-            delButton.hidden = true;
+            delButton.style.display = "none";
             delButton.innerText = "Delete";
 
             return delButton;
@@ -199,11 +199,15 @@
         //handles the selection of todo.
         selectTodo(event) {
             let self = this,
-                selectedTodoElement = event.target;
+                selectedTodoElement = self.getTodoElementFromChild(event.target);
 
             self.clearSelection();
             self.selectedTodo = selectedTodoElement;
-            selectedTodoElement.className = 'selected-todo';
+
+            let todoId = selectedTodoElement.getAttribute('id');
+            $('#toggle_' + todoId).hide();
+            $('#delete_' + todoId).fadeIn("slow");
+            selectedTodoElement.classList.add('selected-todo');
             self.deleteTodo.disabled = false;
         },
 
@@ -211,8 +215,13 @@
         clearSelection() {
             let self = this,
                 selectedTodo = self.selectedTodo;
+
             if (selectedTodo) {
-                selectedTodo.className = "todo";
+                let todoId = selectedTodo.getAttribute('id');
+
+                $('#delete_' + todoId).hide();
+                $('#toggle_' + todoId).fadeIn("slow");
+                selectedTodo.classList.remove('selected-todo');
                 self.deleteTodo.disabled = true;
             }
         },
@@ -225,26 +234,30 @@
                 var todoId = target.getAttribute('todoId');
                 var toggleElement = self.getToggleElementById(todoId);
                 var completed = toggleElement.children[0].checked;
-                // var todoElement = self.getTodoElementById(todoId);
-                // var completedString = todoElement.getAttribute('completed');
+
                 var newCompleted = completed === true ? false : true;
                 var updates = {
-                        'completed': newCompleted,
-                    }
-                    // toggleElement.children[0].checked = newCompleted;
-                    // todoElement.children[1].children[0].checked = newCompleted;
-                    // todoElement.setAttribute('completed', newCompleted);
+                    'completed': newCompleted,
+                };
                 self.fromUI = true;
                 database.updateExistingTodo(todoId, updates);
 
             }
         },
-
+        getTodoElementFromChild(child) {
+            while (child.getAttribute('id') == null) {
+                child = child.parentElement;
+            }
+            return child;
+        },
         getTodoElementById(id) {
             return (document.getElementById(id));
         },
         getToggleElementById(id) {
             return (document.getElementById('toggle_' + id));
+        },
+        getDeleteElementById(id) {
+            return (document.getElementById('delete_' + id));
         }
     }
 })();
