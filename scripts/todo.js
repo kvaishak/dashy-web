@@ -7,13 +7,14 @@
         currentUser: authenticate.getCurrentUser(),
         databaseObject: undefined,
         selectedTodo: undefined,
+        fromUI: false,
 
         init() {
             var self = this;
             this.todoContainer = document.getElementById("todoContainer");
             this.inputTodo = document.getElementById('inputTodo');
             this.newTodo = document.getElementById('newTodo');
-            this.clearTodo = document.getElementById('clearTodo');
+            // this.clearTodo = document.getElementById('clearTodo');
             this.logOut = document.getElementById('logout');
             this.deleteTodo = document.getElementById('deleteTodo');
 
@@ -42,17 +43,17 @@
                 self.inputTodo.value = "";
             });
 
-            self.deleteTodo.addEventListener('click', function() {
-                let selectedTodoId = self.selectedTodo.getAttribute('id');
+            // self.deleteTodo.addEventListener('click', function() {
+            //     let selectedTodoId = self.selectedTodo.getAttribute('id');
 
-                database.deleteTodo(selectedTodoId);
-                self.clearSelection();
-            });
+            //     database.deleteTodo(selectedTodoId);
+            //     self.clearSelection();
+            // });
 
             //clearing the text in the input box.
-            self.clearTodo.addEventListener('click', function() {
-                self.inputTodo.value = "";
-            });
+            // self.clearTodo.addEventListener('click', function() {
+            //     self.inputTodo.value = "";
+            // });
 
             //logging out.
             self.logOut.addEventListener('click', function() {
@@ -88,15 +89,18 @@
             },
             update(snap) {
                 let todoData = snap.val(),
-                    todoElement = todo.getTodoElementById(snap.key);
+                    toggleElement = todo.getToggleElementById(snap.key);
 
-                //completion toggle updation.
-                let completed = todoElement.getAttribute('completed'),
-                    updateCompleted = String(todoData.completed);
-                if (completed != updateCompleted) {
-                    todoElement.children[1].children[0].checked = todoData.completed;
-                    todoElement.setAttribute('completed', todoData.completed);
+                if (!todo.fromUI) {
+                    //completion toggle updation.
+                    let completed = toggleElement.children[0].checked,
+                        updateCompleted = todoData.completed;
+                    if (completed != updateCompleted) {
+                        toggleElement.children[0].checked = todoData.completed;
+                        // todoElement.setAttribute('completed', todoData.completed);
+                    }
                 }
+                self.fromUI = false;
             }
         },
 
@@ -106,27 +110,68 @@
             var todoData = snap.val();
             var id = snap.key;
 
-            var todoElement = document.createElement('p');
-            todoElement.setAttribute('id', id);
-            todoElement.setAttribute('completed', todoData.completed);
-            todoElement.setAttribute('todo-content', todoData.subject);
-            todoElement.className += 'todo';
+            var todoDiv = document.createElement('div');
+            todoDiv.setAttribute('id', id);
+            todoDiv.setAttribute('completed', todoData.completed);
+            todoDiv.setAttribute('todo-content', todoData.subject);
+            todoDiv.classList.add('row');
+            todoDiv.classList.add('todo');
 
-            var todoContent = document.createElement('label');
+            var todoColomn = document.createElement('div');
+            todoColomn.classList.add('col-sm-8');
+
+            var todoContent = document.createElement('p');
             todoContent.innerText = todoData.subject;
             todoContent.classList.add('todo-content');
-            todoElement.append(todoContent);
+            todoColomn.append(todoContent);
 
-            var toggle = self.createToggle(todoData.completed, id);
-            todoElement.append(toggle);
-            return todoElement;
+            todoDiv.append(todoColomn);
+
+            var toggleAndDelete = self.createCompleteDeleteContainer(todoData.completed, id);
+            todoDiv.append(toggleAndDelete);
+            return todoDiv;
+        },
+
+        //creates the container that creates the complete and delete buttons/toggle.
+        createCompleteDeleteContainer(completed, id) {
+            var self = this;
+            var mainDiv = document.createElement('div');
+            mainDiv.classList.add('col-sm-4');
+            var completionToggle = self.createToggle(completed, id);
+            var deleteButton = self.createDeleteButton(id);
+
+            mainDiv.append(deleteButton);
+            mainDiv.append(completionToggle);
+
+            return mainDiv
+        },
+
+        createDeleteButton(id) {
+            var delButton = document.createElement('button');
+            delButton.setAttribute('type', 'button');
+            delButton.setAttribute('id', 'deleteTodo');
+            delButton.setAttribute('todoId', id);
+
+            delButton.classList.add('btn');
+            delButton.classList.add('btn-danger');
+            delButton.classList.add('btn-lg');
+            delButton.classList.add('btn-block');
+
+            delButton.hidden = true;
+            delButton.innerText = "Delete";
+
+            return delButton;
         },
 
         //creating the toggle for the completed attribute of todo.
         createToggle(completed, id) {
             var self = this;
+            var mainDiv = document.createElement('div');
+            mainDiv.classList.add('text-center');
+
             var label = document.createElement('label');
             label.classList.add('switch');
+            label.setAttribute('id', 'toggle_' + id);
 
             var ip = document.createElement('input');
             ip.setAttribute('type', 'checkbox');
@@ -149,7 +194,8 @@
                 event.stopPropagation();
             });
 
-            return label;
+            mainDiv.append(label);
+            return mainDiv;
         },
 
         //handles the selection of todo.
@@ -179,15 +225,18 @@
             var target = event.target;
             if (target.classList[0] == "slider") {
                 var todoId = target.getAttribute('todoId');
-                var todoElement = self.getTodoElementById(todoId);
-                var completedString = todoElement.getAttribute('completed');
-                var newCompleted = completedString === "true" ? false : true;
+                var toggleElement = self.getToggleElementById(todoId);
+                var completed = toggleElement.children[0].checked;
+                // var todoElement = self.getTodoElementById(todoId);
+                // var completedString = todoElement.getAttribute('completed');
+                var newCompleted = completed === true ? false : true;
                 var updates = {
                         'completed': newCompleted,
                     }
+                    // toggleElement.children[0].checked = newCompleted;
                     // todoElement.children[1].children[0].checked = newCompleted;
-                todoElement.setAttribute('completed', newCompleted);
-
+                    // todoElement.setAttribute('completed', newCompleted);
+                self.fromUI = true;
                 database.updateExistingTodo(todoId, updates);
 
             }
@@ -195,6 +244,9 @@
 
         getTodoElementById(id) {
             return (document.getElementById(id));
+        },
+        getToggleElementById(id) {
+            return (document.getElementById('toggle_' + id));
         }
     }
 })();
