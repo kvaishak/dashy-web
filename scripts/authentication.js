@@ -67,6 +67,7 @@
             username = username ? username : self.createUsernamefromEmail(email);
             var self = this;
             self.auth.createUserWithEmailAndPassword(email, password).then(function(userInfo) {
+                console.log("Username updated");
                 return userInfo.user.updateProfile({
                     displayName: username
                 })
