@@ -15,7 +15,6 @@
             this.newTodo = document.getElementById('newTodo');
             // this.clearTodo = document.getElementById('clearTodo');
             this.logOut = document.getElementById('logout');
-            // this.deleteTodo = document.getElementById('deleteTodo');
 
             this.bindEvents();
         },
@@ -41,6 +40,15 @@
                 database.createNewTodo(todo);
                 self.inputTodo.value = "";
             });
+
+
+            $('#inputTodo').keypress(function(e) {
+                if (e.which == 13) {
+                    e.preventDefault();
+                    $("#newTodo").click();
+                }
+            });
+
 
             //clearing the text in the input box.
             // self.clearTodo.addEventListener('click', function() {
