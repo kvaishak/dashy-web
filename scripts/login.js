@@ -11,6 +11,7 @@
         txtPassword: document.getElementById("password"),
         confirmPassword: document.getElementById("confirm"),
         username: document.getElementById("username"),
+        remember_me: document.getElementById("remember_me"),
 
         alertBox: document.getElementById("alertBox"),
         alertMsg: document.getElementById("alertMsg"),
@@ -28,14 +29,16 @@
                 //get email and password value
                 var email = self.txtEmail.value;
                 var password = self.txtPassword.value;
+                var remember_me = self.remember_me,
+                    remember = remember_me.checked;
 
                 if (self.signInMode) {
-                    authenticate.login(email, password);
+                    authenticate.login(email, password, remember);
                 } else {
                     var confirmPassword = self.confirmPassword.value;
                     var username = self.username.value;
                     if (password === confirmPassword) {
-                        authenticate.signup(email, password, username);
+                        authenticate.signup(email, password, username, remember);
                     } else {
                         self.alert("Password Mismatch");
                     }
@@ -44,10 +47,7 @@
 
             //Toggling between signin/create a new account
             self.signUpButton.addEventListener('click', e => {
-                // var email = self.txtEmail.value;
-                // var password = self.txtPassword.value;
 
-                // authenticate.signup(email, password);
                 if (self.signInMode) {
                     self.loginButton.innerText = "Sign up";
                     self.signUpButton.innerText = "Sign in instead";
