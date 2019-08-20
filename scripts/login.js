@@ -68,6 +68,26 @@
 
 
             });
+
+            //enter on password will trigger the sign in.
+            $('#password').keypress(function(e) {
+                if (e.which == 13) {
+                    e.preventDefault();
+                    if (self.signInMode) {
+                        $("#login").click();
+                    }
+                }
+            });
+
+            //entering the username on signup mode will trigger the signup
+            $('#username').keypress(function(e) {
+                if (e.which == 13) {
+                    e.preventDefault();
+                    if (!self.signInMode) {
+                        $("#login").click();
+                    }
+                }
+            });
         },
         alert(message) {
             var self = this;

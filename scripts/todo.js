@@ -41,7 +41,7 @@
                 self.inputTodo.value = "";
             });
 
-
+            //enter on input box will create a new todo.
             $('#inputTodo').keypress(function(e) {
                 if (e.which == 13) {
                     e.preventDefault();
