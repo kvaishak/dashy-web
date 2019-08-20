@@ -16,7 +16,7 @@
         firebase: undefined, //firebase object to be used to get the database in todo.js
         auth: undefined, //firebase auth object.
         user: null, //current user.
-        remember: false,
+        remember: true,
 
 
 
@@ -82,7 +82,7 @@
         //for deciding whether the user should be logged off as soon as the application is closed or not.
         setRememberParam(remember) {
             if (remember === "true") {
-                firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+                firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
             } else {
                 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
             }
