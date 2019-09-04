@@ -17,6 +17,7 @@
         auth: undefined, //firebase auth object.
         user: null, //current user.
         remember: true,
+        displayName: undefined,
 
 
 
@@ -37,11 +38,23 @@
                     console.log(user);
                     self.user = user;
                     if (!fromDashBoard) {
-                        window.location = "pages/dashboard.htm#" + self.remember;
+                        window.location = "pages/dashboard.htm" + "#" + self.remember + "-" + self.displayName;
                     } else {
-                        let remember = window.location.hash.substring(1);
+                        let hashValue = window.location.hash.split('-');
+                        let remember = hashValue[0].substring(1);
+
                         self.setRememberParam(remember);
-                        dashboard.updateUserName(user);
+
+                        //for updating the username in case of new user.
+                        if (!user.displayName) {
+                            let displayName = hashValue[1];
+                            self.displayName = displayName;
+                            self.setDisplayName(displayName);
+                        } else {
+                            self.displayName = user.displayName;
+                        }
+
+                        dashboard.updateUserName(self.displayName);
                         database.init();
                     }
                 } else {
@@ -69,11 +82,9 @@
             var self = this;
             username = username ? username : self.createUsernamefromEmail(email);
             self.remember = remember;
+            self.displayName = username;
             self.auth.createUserWithEmailAndPassword(email, password).then(function(userInfo) {
-                console.log("Username updated");
-                return userInfo.user.updateProfile({
-                    displayName: username
-                });
+
             }).catch(function(error) {
                 login.alert(error.message);
             });
@@ -86,6 +97,16 @@
             } else {
                 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
             }
+        },
+
+        //for setting up the display name after the page has been loaded.
+        setDisplayName(displayName) {
+            var self = this;
+            if (!displayName) {
+                displayName = self.createUsernamefromEmail(self.user.email);
+            }
+            self.displayName = displayName; //for updating the displayName with the email.
+            self.user.updateProfile({ displayName: displayName });
         },
 
         createUsernamefromEmail(email) {
