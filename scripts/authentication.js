@@ -93,6 +93,13 @@
             return (email.substr(0, index));
         },
 
+        //for sigining in with google account.
+        signinUsingGoogle() {
+            var self = this;
+            var provider = new firebase.auth.GoogleAuthProvider();
+            self.auth.signInWithRedirect(provider);
+        },
+
         signout() {
             var self = this;
             //loging out.

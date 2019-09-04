@@ -3,6 +3,7 @@
         //initializing the elements.
         loginButton: document.getElementById("login"),
         signUpButton: document.getElementById("signup"),
+        googleButton: document.getElementById("googleButton"),
 
         confirmPasswordDiv: $('#confirmPassword'),
         usernameDiv: $('#userName'),
@@ -65,8 +66,11 @@
 
                     self.signInMode = true;
                 }
+            });
 
-
+            //signin using google Api
+            self.googleButton.addEventListener('click', e => {
+                authenticate.signinUsingGoogle();
             });
 
             //enter on password will trigger the sign in.
