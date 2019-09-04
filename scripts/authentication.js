@@ -4,13 +4,13 @@
 
         // Your web app's Firebase configuration
         firebaseConfig: {
-            apiKey: "AIzaSyDsWM8tg4WJs-QfrDOeY59cf7oCmDLEMf0",
-            authDomain: "logindemo-81a40.firebaseapp.com",
-            databaseURL: "https://logindemo-81a40.firebaseio.com",
-            projectId: "logindemo-81a40",
-            storageBucket: "logindemo-81a40.appspot.com",
-            messagingSenderId: "198765944214",
-            appId: "1:198765944214:web:81f3f37659a91688"
+            apiKey: "AIzaSyC-DGi9_6tsBrgSH_IZmw2gaFcTc7fweIE",
+            authDomain: "dashy-800d6.firebaseapp.com",
+            databaseURL: "https://dashy-800d6.firebaseio.com",
+            projectId: "dashy-800d6",
+            storageBucket: "",
+            messagingSenderId: "689140744292",
+            appId: "1:689140744292:web:4cf55ffcdedc1466"
         },
 
         firebase: undefined, //firebase object to be used to get the database in todo.js
