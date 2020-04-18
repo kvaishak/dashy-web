@@ -1,5 +1,5 @@
 # dashy-web
-Yet another simple Web Application to track your todo, made using HTML, Javascript in its core with authentication and Database Storage being provided by Firebase and beautification by Bootstrap. It is hosted directly from Github with the use of Netlify. You can try the application [here](https://dashy.netlify.com/).
+Yet another simple Web Application to track your todo, made using HTML, Javascript in its core with authentication and Database Storage being provided by Firebase and beautification by Bootstrap. It is hosted directly from Github with the use of Netlify. You can try the application [here](https://dashy.netlify.app/).
 
 Dashy arose from my need to have a supporting web page to access the content/todo created from my Flutter mobile application. 
 
