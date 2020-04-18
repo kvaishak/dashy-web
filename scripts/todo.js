@@ -57,6 +57,7 @@
 
             //logging out.
             self.logOut.addEventListener('click', function() {
+                console.log("logging out");
                 authenticate.signout();
             });
 
@@ -118,10 +119,18 @@
 
             var todoColomn = document.createElement('div');
             todoColomn.classList.add('col-8');
+            todoColomn.classList.add('d-md-flex');
+            todoColomn.classList.add('align-items-md-center');
 
             var todoContent = document.createElement('p');
             todoContent.innerText = todoData.subject;
+            todoContent.classList.add('text-left');
+            todoContent.classList.add('d-md-flex');
+            todoContent.classList.add('justify-content-md-start');
+            todoContent.style = "color: rgb(255,255,255);font-size: 25px;margin: 10px;margin-top: 5px;padding: 10px;padding-right: 10px;margin-right: 5px;margin-left: 0px;margin-bottom: 5px;font-weight: normal;"
+
             todoColomn.append(todoContent);
+
 
             todoDiv.append(todoColomn);
 
@@ -135,6 +144,9 @@
             var self = this;
             var mainDiv = document.createElement('div');
             mainDiv.classList.add('col-4');
+            mainDiv.classList.add('text-center');
+            mainDiv.classList.add('d-inline-block');
+
             var completionToggle = self.createToggle(completed, id);
             var deleteButton = self.createDeleteButton(id);
 
@@ -154,8 +166,9 @@
             delButton.classList.add('btn-danger');
             delButton.classList.add('btn-lg');
             delButton.classList.add('btn-block');
+            delButton.classList.add('flex-fill');
 
-            delButton.style.display = "none";
+            delButton.style = "margin: 10px;padding: 10px; display:none"
             delButton.innerText = "Delete";
 
             delButton.addEventListener('click', function() {
@@ -169,7 +182,12 @@
         createToggle(completed, id) {
             var self = this;
             var mainDiv = document.createElement('div');
+            mainDiv.setAttribute('id', 'toggleDiv_' + id);
             mainDiv.classList.add('text-center');
+            mainDiv.classList.add('d-md-flex');
+            mainDiv.classList.add('justify-content-md-center');
+            mainDiv.classList.add('align-items-md-center');
+            mainDiv.style = "padding: 5px;margin: 16px;"
 
             var label = document.createElement('label');
             label.classList.add('switch');

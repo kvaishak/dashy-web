@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Dashy</title>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+    <link rel="stylesheet" href="../css/Footer-Clean.css">
+    <link rel="stylesheet" href="../css/Header-Blue.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/Toggle-Switch.css">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+    <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-database.js"></script>
+    <script src="../scripts/database.js"></script>
+    <script src="../scripts/authentication.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style type="text/css">
+         :root #content>#right>.dose>.dosesingle,
+         :root #content>#center>.dose>.dosesingle {
+            display: none !important;
+        }
+    </style>
+
+</head>
+
+<body data-gr-c-s-loaded="true" style="background: linear-gradient(135deg, #172a74, #21a9af);background-color: #184e8e;/*padding-bottom: 80px;*//*font-family: 'Source Sans Pro', sans-serif;*//*overflow: hidden;*//*margin: 0;*//*height: 100%;*/">
+    <div class="se-pre-con"></div>
+    <div>
+        <div class="header-blue" style="height: 100%;width: 100%;left: 0;top: 0;overflow: hidden;">
+            <nav class="navbar navbar-light navbar-expand-md navigation-clean-search">
+                <div class="container-fluid"><a class="navbar-brand text-left" href="#" style="font-size: 35px;">Dashy</a><button id="logout" class="btn btn-lg action-button" data-bs-hover-animate="pulse" type="submit" style="color: rgb(255,255,255);">Sign Out</button></div>
+            </nav>
+            <div class="jumbotron" style="background-color: rgba(233,236,239,0);">
+                <div class="container">
+                    <h1 id="userWelcome" class="display-1 text-left" style="color: rgb(255,255,255);">Hello User</h1>
+                    <p class="text-left float-none" style="color: rgb(255,255,255);font-size: 20px;padding: 0px;padding-right: 0px;padding-left: 0px;margin-right: 0;margin-left: 0;">This is a Simple todo Application called Dashy created by me. You can use this web application to Add/Delete and Modify your todos. There is a supporting Android and iOS Application as well in Development.</p>
+                </div>
+            </div>
+            <div class="container">
+                <h1 style="color: rgb(255,255,255);font-weight: bold;">Todo</h1>
+                <div id=todoContainer>
+
+                    <div class="row">
+                        <div class="col-8 d-md-flex align-items-md-center">
+                            <p class="text-left d-md-flex justify-content-md-start" style="color: rgb(255,255,255);font-size: 25px;margin: 10px;margin-top: 5px;padding: 10px;padding-right: 10px;margin-right: 5px;margin-left: 0px;margin-bottom: 5px;font-weight: normal;">Something very big yoyoy wow&nbsp;</p>
+                        </div>
+                        <div class="col-4 text-center d-inline-block">
+
+                            <div class="text-center d-md-flex justify-content-md-center align-items-md-center" style="padding: 5px;margin: 16px;">
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row">
+                        <div class="clearfix"></div>
+                        <div class="col-8 d-md-flex align-items-md-center">
+                            <p class="text-left d-md-flex justify-content-md-start" style="color: rgb(255,255,255);font-size: 25px;margin: 10px;margin-top: 5px;padding: 10px;padding-right: 10px;margin-right: 5px;margin-left: 0px;margin-bottom: 5px;font-weight: normal;">Something very big yoyoy wow so dasdasdasdas adsasdasdadadsasd asdasd asdasda asdasdasd asdasd asdasdas asdasdasd asdasd asdasdas asdasd</p>
+                        </div>
+                        <div class="col-4 text-center d-inline-block">
+                            <div class="text-center d-md-flex justify-content-md-center align-items-md-center" style="padding: 5px;margin: 16px;"><label class="switch">
+  <input type="checkbox">
+  <span class="slider round"></span>
+</label></div>
+                        </div>
+                    </div> -->
+
+
+                    <!-- <div class="row">
+                        <div class="clearfix"></div>
+                        <div class="col-8 d-md-flex align-items-md-center">
+                            <p class="text-left d-md-flex justify-content-md-start" style="color: rgb(255,255,255);font-size: 25px;margin: 10px;margin-top: 5px;padding: 10px;padding-right: 10px;margin-right: 5px;margin-left: 0px;margin-bottom: 5px;font-weight: normal;">ssss</p>
+                        </div>
+                        <div class="col-4 text-center d-inline-block">
+                            <div class="text-center d-md-flex justify-content-md-center align-items-md-center" style="padding: 5px;margin: 16px;"><label class="switch">
+  <input type="checkbox">
+  <span class="slider round"></span>
+</label></div>
+                        </div>
+                    </div> -->
+
+
+
+
+
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="clearfix"></div>
+                    <div class="col-8 d-md-flex align-items-md-center"><input id="inputTodo" class="border rounded shadow-sm form-control-lg d-block flex-fill justify-content-xl-start" type="text" style="background-color: rgba(255,255,255,0);color: rgb(255,255,255);margin: 10px;padding: 10px;" placeholder="Enter your todo here."></div>
+                    <div class="col-4 text-center d-inline-block"><button id="newTodo" class="btn btn-success btn-block btn-lg flex-fill" type="button" style="margin: 10px;padding: 10px;">New Todo</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-clean" style="color: rgb(255,255,255);">
+        <footer>
+            <div>
+                <p class="text-center">Dashy by Vaishak</p>
+            </div>
+        </footer>
+    </div>
+    <script src="../scripts/jquery.min.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../scripts/bs-init.js"></script>
+    <script src="../scripts/todo.js"></script>
+    <script src="../scripts/dashboard.js"></script>
+    <script>
+        dashboard.init();
+        authenticate.init(true);
+    </script>
+</body>
+
+</html>
