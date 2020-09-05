@@ -38,7 +38,7 @@
                     console.log(user);
                     self.user = user;
                     if (!fromDashBoard) {
-                        window.location = "pages/index.html" + "#" + self.remember + "-" + self.displayName;
+                        window.location = "pages/dashboard.html" + "#" + self.remember + "-" + self.displayName;
                     } else {
                         let hashValue = window.location.hash.split('-');
                         let remember = hashValue[0].substring(1);
